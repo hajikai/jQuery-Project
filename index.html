@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="tyyli.css">
+  <title>To Do -lista</title>
+</head>
+<body onload="lataaMuistista();">
+  <h1>Projekti #1 - To Do -lista</h1>
+  <div id="tekstikenttä">
+    <p>Tämä on Lauran ammattikorkeakoulun Web-sovellusten kehittäminen Javascriptillä -kurssin ensimmäinen projekti,
+      joka toimii To Do -listana.
+      Alta löydät lomakkeen, johon voit syöttää To Do -itemin otsikon sekä kommentin. Ainoastaan otsikko on pakollinen,
+      mutta otsikon kommentoiminen on hyödyllistä monissa tilanteissa.
+      Lisäämäsi To Do -itemit pysyvät tallessa selaimen localStoragessa eli ne eivät katoa, vaikka sulkisit selaimen.
+      <br><br>
+      HUOM. To Do -lista ei toimi ollenkaan jos selaimesi ei tue localStorage / sessionStorage -metodeja. Saat
+      hälytyksen mikäli näin on.
+    </p>
+    <p id="määrä">Lista on tyhjä.</p>
+  </div>
+  <h2 id="haluatko">Haluatko lisätä jotain listaan?</h2>
+  <form name="omaLomake1" action="#" onsubmit="lisääListaan();" method="">
+    <span><strong>Otsikko:</strong></span><br><input type="text" name="otsikko" id="otsikko" required /><br />
+    <span><strong>Kommentti:</strong></span><br><textarea name="comment" id="comment"></textarea>
+    <br><input type="button" value="Lähetä" id='nappi' onclick="lisääListaan();" />
+  </form>
+  <div id="lista"></div>
+  <br>
+  <button id="poistonappi" onclick="tyhjennäLista();">Tyhjennä lista.</button>
+</body>
+<script src="projekti1.js"></script>
+
+</html>
