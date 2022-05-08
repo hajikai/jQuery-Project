@@ -16,6 +16,10 @@ h2 {
     width: 800px;
 }
 
+.kommentti {
+    font-weight: bold;
+    font-size: 13px;
+}
 span {
     color: black; 
     font: 14px Tahoma, Verdana, sans-serif;
