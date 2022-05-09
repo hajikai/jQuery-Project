@@ -238,7 +238,7 @@ function lataaMuistista2() {
     });
 
     const dynaaminentausta = $("<div>", {
-      class: "notdone",
+      class: "tausta",
       width: "500px",
       height: "fit-content",
       padding: "2px",
@@ -318,7 +318,7 @@ function createItem() {
 function renderöi() {
   var lista = $("#lista");
   var määrä = myStorage.getItem("määrä");
-  for (let i = 1; i < määrä; i++) {
+
     var loadTitle = myStorage.getItem("otsikko" + määrä);
     var loadComment = myStorage.getItem("kommentti" + määrä);
     var loadCompleted = myStorage.getItem("tehty" + määrä);
@@ -326,14 +326,50 @@ function renderöi() {
     const otsikkokenttä = $("<h2>" + loadTitle + "</h2>");
     otsikkokenttä.attr("class", "otsikko");
 
-    var kommenttikenttä = $("<p>" + loadComment + "</p>");
+    const kommenttikenttä = $("<p>" + loadComment + "</p>");
     kommenttikenttä.attr("class", "kommentti");
 
     const tärkeäKenttä = $("<button>Merkitse tehdyksi.</button>");
-    tärkeäKenttä.attr("class", "done");
+    tärkeäKenttä.attr("class", "notdone");
+
+    tärkeäKenttä.click( function () {
+      var määrä = myStorage.getItem("määrä");
+      var loadTitle = myStorage.getItem("otsikko" + määrä);
+      if (tärkeäKenttä.hasClass('notdone') == true ) {
+        tärkeäKenttä.removeClass( "notdone" ).addClass( "done" );
+        if (tärkeäKenttä.hasClass('done') == true) {
+        otsikkokenttä.css("textDecoration", "line-through");
+        kommenttikenttä.hide("slow");
+        tärkeäKenttä.text('Palauta.');
+        myStorage.setItem("tehty" + määrä, loadTitle); // Tai otsikkokenttä.html() tms.
+        var päivitettyTehdyt = myStorage.getItem("tehdyt");
+        var parsedTehdyt = parseInt(päivitettyTehdyt);
+        parsedTehdyt = parsedTehdyt + 1;
+        myStorage.setItem("tehdyt", parsedTehdyt);
+        tsekkaaMäärä2();
+        console.log('done now')
+      }
+      } else if (tärkeäKenttä.hasClass('done') == true ) {
+        tärkeäKenttä.removeClass( "done" ).addClass( "notdone" );
+        if (tärkeäKenttä.hasClass('notdone') == true) {
+          otsikkokenttä.css("textDecoration", "");
+          kommenttikenttä.show("slow");
+          tärkeäKenttä.text('Merkitse tehdyksi.')
+          myStorage.removeItem("tehty" + määrä);
+          var päivitettyTehdyt = myStorage.getItem("tehdyt");
+          var parsedTehdyt = parseInt(päivitettyTehdyt);
+          if (parsedTehdyt > 0) {
+          parsedTehdyt = parsedTehdyt - 1;
+          } 
+          myStorage.setItem("tehdyt", parsedTehdyt);
+          tsekkaaMäärä2();
+          console.log('not done now');
+      }
+    }
+    })
 
     const dynaaminentausta = $("<div>", {
-      class: "notdone",
+      class: "tausta",
       width: "500px",
       height: "fit-content",
       padding: "2px",
@@ -347,9 +383,9 @@ function renderöi() {
     dynaaminentausta.appendTo(lista);
     lista.show("slow");
 
-    lisääKuuntelija();
+    // lisääKuuntelija();
   }
-}
+
 
 function lisääKuuntelija() {
   var lista = document.getElementById("lista");

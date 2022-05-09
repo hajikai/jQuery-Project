@@ -45,9 +45,14 @@ button {
     border-color: #0d6efd;
 }
 
-.done {
+.notdone {
     background-color: green;
     border: 2px solid green;
+}
+
+.done {
+    background-color: red;
+    border: 2px solid red;
 }
 
 
