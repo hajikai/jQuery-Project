@@ -269,11 +269,16 @@ function lataaMuistista2() {
 // var items = [];
 // var amount;
 
+var counter = 0;
+
 function createItem() {
   var otsikko = $("#otsikko").val();
   var kommentti = $("#comment").val();
   var määrä = myStorage.getItem("määrä");
   var parsettuMäärä = parseInt(määrä);
+
+  const item = { title: otsikko, comment: kommentti };
+  console.log(item);
 
   if (otsikko == "") {
     window.alert(
@@ -288,15 +293,15 @@ function createItem() {
     });
   } else {
     if (typeof Storage !== "undefined") {
-      var storeNumber = määrä + 1;
-      var storeTitle = "otsikko" + storeNumber;
-      var storeComment = "kommentti" + storeNumber;
+      counter = counter + 1;
+      var storeTitle = "otsikko" + counter;
+      var storeComment = "kommentti" + counter;
 
       // Ensin (yläpuolella) määrittelen localStorage avainten nimet tyylillä 'otsikko1', 'otsikko2', 'kommentti1' jne. mahdollistaen helpomman muistista lataamisen myöhemmässä funktiossa.
 
       var titleValue = otsikko;
       var commentValue = kommentti;
-      var amountValue = määrä + 1;
+      var amountValue = counter;
 
       // Seuraavaksi (yläpuolella) määrittelen localStorage avainten arvot sivulta löytyvien otsikkojen ja kommenttien perusteella.
 
@@ -307,41 +312,87 @@ function createItem() {
       renderöi();
     }
     // Lopuksi lisään avaimet (nimet ja arvot) localStorageen.
-
-    console.log(parsettuMäärä);
   }
 }
 
 function renderöi() {
+  var lista = $("#lista");
   var määrä = myStorage.getItem("määrä");
-  var otsikko = myStorage.getItem("otsikko" + määrä);
-  var kommentti = myStorage.getItem("kommentti" + määrä);
+  for (let i = 1; i < määrä; i++) {
+    var loadTitle = myStorage.getItem("otsikko" + määrä);
+    var loadComment = myStorage.getItem("kommentti" + määrä);
+    var loadCompleted = myStorage.getItem("tehty" + määrä);
 
-  const otsikkokenttä = $("<h2>" + otsikko + "</h2>");
-  otsikkokenttä.attr("class", "otsikko");
+    const otsikkokenttä = $("<h2>" + loadTitle + "</h2>");
+    otsikkokenttä.attr("class", "otsikko");
 
-  var kommenttikenttä = $("<p>" + kommentti + "</p>");
-  kommenttikenttä.attr("class", "kommentti");
+    var kommenttikenttä = $("<p>" + loadComment + "</p>");
+    kommenttikenttä.attr("class", "kommentti");
 
-  const tärkeäKenttä = $("<button>Merkitse tehdyksi.</button>");
-  tärkeäKenttä.attr("class", "done");
+    const tärkeäKenttä = $("<button>Merkitse tehdyksi.</button>");
+    tärkeäKenttä.attr("class", "done");
 
-  tärkeäKenttä.click(function () {
-    var määrä = myStorage.getItem("määrä");
-    for (let i = 1; i < määrä + 1; i++) {
-      var loadTitle = myStorage.getItem("otsikko" + i);
-      var loadCompleted = myStorage.getItem("tehty" + i);
+    const dynaaminentausta = $("<div>", {
+      class: "notdone",
+      width: "500px",
+      height: "fit-content",
+      padding: "2px",
+      borderStyle: "outset",
+    });
+
+    otsikkokenttä.appendTo(dynaaminentausta);
+    kommenttikenttä.appendTo(dynaaminentausta);
+    tärkeäKenttä.appendTo(dynaaminentausta);
+
+    dynaaminentausta.appendTo(lista);
+    lista.show("slow");
+
+    lisääKuuntelija();
+  }
+}
+
+function lisääKuuntelija() {
+  var lista = document.getElementById("lista");
+  var amount = myStorage.getItem("määrä");
+  const otsikot = $(".otsikko");
+  const kommentit = $(".kommentti");
+  const tärkeäKenttä = $(".done");
+
+  for (let i = 0; i <= amount; i++) {
+    var realAmount = i + 1;
+
+    var loadTitle = myStorage.getItem("otsikko" + realAmount);
+    var loadComment = myStorage.getItem("kommentti" + realAmount);
+    var loadCompleted = myStorage.getItem("tehty" + realAmount);
+
+    tärkeäKenttä[i].click(function () {
+      var loadTitle = myStorage.getItem("otsikko" + realAmount);
+      var loadComment = myStorage.getItem("kommentti" + realAmount);
+      var loadCompleted = myStorage.getItem("tehty" + realAmount);
+
+      var lista = document.getElementById("lista");
+      var amount = myStorage.getItem("määrä");
+      var otsikkoKenttä = $(".otsikko");
+      var kommenttiKenttä = $(".kommentti");
+      var tärkeäKenttä = $(".done");
 
       if (loadTitle == loadCompleted) {
-        otsikkokenttä.css("textDecoration", "");
-        kommenttikenttä.show("slow");
-        tärkeäKenttä.css({
+        var loadTitle = myStorage.getItem("otsikko" + realAmount);
+        var loadComment = myStorage.getItem("kommentti" + realAmount);
+        var loadCompleted = myStorage.getItem("tehty" + realAmount);
+        var lista = document.getElementById("lista");
+        var otsikkoKenttä = $(".otsikko");
+        var kommenttiKenttä = $(".kommentti");
+        var tärkeäKenttä = $(".done");
+        otsikkoKenttä[i].css("textDecoration", "");
+        kommenttiKenttä[i].show("slow");
+        tärkeäKenttä[i].css({
           display: "inline",
           backgroundColor: "green",
           borderColor: "green",
         });
-        tärkeäKenttä.text("Merkitse tehdyksi.");
-        myStorage.removeItem("tehty" + i);
+        tärkeäKenttä[i].text("Merkitse tehdyksi.");
+        myStorage.removeItem("tehty" + realAmount);
         var päivitettyTehdyt = myStorage.getItem("tehdyt");
         var parsedTehdyt = parseInt(päivitettyTehdyt);
         parsedTehdyt = parsedTehdyt - 1;
@@ -349,31 +400,30 @@ function renderöi() {
         tsekkaaMäärä2();
       }
       if (loadTitle !== loadCompleted) {
-        otsikkokenttä.css("textDecoration", "line-through");
-        kommenttikenttä.hide("slow");
-        tärkeäKenttä.css({
+        var loadTitle = myStorage.getItem("otsikko" + realAmount);
+        var loadComment = myStorage.getItem("kommentti" + realAmount);
+        var loadCompleted = myStorage.getItem("tehty" + realAmount);
+        var lista = $("#lista");
+        var otsikkoKenttä = $(".otsikko");
+        var kommenttiKenttä = $(".kommentti");
+        var tärkeäKenttä = $(".done");
+        otsikkoKenttä[i].css("textDecoration", "line-through");
+        kommenttiKenttä[i].hide("slow");
+        tärkeäKenttä[i].css({
           display: "inline",
           backgroundColor: "red",
           borderColor: "red",
         });
-        tärkeäKenttä.text("Palauta.");
-        myStorage.setItem("tehty" + i, otsikkokenttä.text()); // Tai otsikkokenttä.html() tms.
+        tärkeäKenttä[i].text("Palauta.");
+        myStorage.setItem("tehty" + realAmount, otsikkokenttä.text()); // Tai otsikkokenttä.html() tms.
         var päivitettyTehdyt = myStorage.getItem("tehdyt");
         var parsedTehdyt = parseInt(päivitettyTehdyt);
         parsedTehdyt = parsedTehdyt + 1;
         myStorage.setItem("tehdyt", parsedTehdyt);
         tsekkaaMäärä2();
       }
-    }
-  });
-
-  const dynaaminentausta = $("<div>", {
-    class: "notdone",
-    width: "500px",
-    height: "fit-content",
-    padding: "2px",
-    borderStyle: "outset",
-  });
+    });
+  }
 
   if (loadTitle == loadCompleted) {
     otsikkokenttä.css("textDecoration", "line-through");
@@ -384,13 +434,6 @@ function renderöi() {
     });
     tärkeäKenttä.text("Palauta."); // Tai .innerHTML / .html
   }
-
-  otsikkokenttä.appendTo(dynaaminentausta);
-  kommenttikenttä.appendTo(dynaaminentausta);
-  tärkeäKenttä.appendTo(dynaaminentausta);
-
-  dynaaminentausta.appendTo(lista);
-  dynaaminentausta.show("slow");
 }
 
 function lisääListaan2() {
@@ -418,36 +461,12 @@ function lisääListaan2() {
 
     if (typeof Storage !== "undefined") {
       var lista = $("#lista");
-      lista.css("display", "none");
+
       const otsikkokenttä = $("<h2>" + otsikko + "</h2>");
       otsikkokenttä.attr("class", "otsikko");
-      // const otsikkokenttä = document.createElement('h2');
-      // const otsikkoteksti = document.createTextNode(otsikko);
-      // var a = document.createAttribute("class");
-      // a.value = 'otsikko';
-      // otsikkokenttä.setAttributeNode(a);
-      // otsikkokenttä.appendChild(otsikkoteksti);
-      // Luotiin otsikolle 'h2'-elementti sekä TextNode tekstikentän arvolla.
-      // Määriteltiin otsikon 'h2'-elementille attribuutti 'class' arvolla 'otsikko', jotta localStorageen tallennus onnistuu helpommin.
-      // Lisätään olennainen TextNode 'h2'-elementtiin.
+
       var kommenttikenttä = $("<p>" + kommentti + "</p>");
       kommenttikenttä.attr("class", "kommentti");
-
-      // const kommenttikenttä = $('<p>', {
-      //   html: kommentti,
-      //   "class": "kommentti",
-      //   fontWeight: "bold",
-      //   fontSize: "13px"
-      // });
-      // const kommenttikenttä = document.createElement('p');
-      // const kommenttiteksti = document.createTextNode(kommentti);
-      // var b = document.createAttribute("class");
-      // b.value = 'kommentti';
-      // kommenttikenttä.setAttributeNode(b);
-      // kommenttikenttä.appendChild(kommenttiteksti);
-
-      // kommenttikenttä.style.fontWeight = 'bold';
-      // kommenttikenttä.style.fontSize = '13px';
 
       // Luotiin kommentille 'p'-elementti sekä TextNode tekstikentän arvolla.
       // Määriteltiin kommentin 'p'-elementille attribuutti 'class' arvolla 'kommentti', jotta localStorageen tallennus onnistuu helpommin.
@@ -455,19 +474,11 @@ function lisääListaan2() {
 
       const tärkeäKenttä = $("<button>Merkitse tehdyksi.</button>");
       tärkeäKenttä.attr("class", "done");
+
       // const tärkeäKenttä = $("<button>", {
       //   html: "Merkitse tehdyksi.",
       //   class: "done",
       // });
-
-      // const tärkeäKenttä = document.createElement('button');
-      // const tärkeäTeksti = document.createTextNode('Merkitse tehdyksi.');
-      // const tunnus2 = document.createAttribute('class');
-      // tunnus2.value = 'done';
-      // tärkeäKenttä.setAttributeNode(tunnus2);
-      // tärkeäKenttä.appendChild(tärkeäTeksti);
-
-      // var lista = document.getElementById("lista");
 
       // lista on jo sivulta löytyvä isompi DIV-elementti ID:llä 'lista', jonka sisään jokainen To Do -item menee dynaaminentausta-nimisen DIV-elementissä.
 
@@ -479,15 +490,6 @@ function lisääListaan2() {
         borderStyle: "outset",
         display: "none",
       });
-
-      // const dynaaminentausta = document.createElement('div');
-      // const tunnus = document.createAttribute('class');
-      // tunnus.value = 'tausta';
-      // dynaaminentausta.setAttributeNode(tunnus);
-      // dynaaminentausta.style.width = '500px';
-      // dynaaminentausta.style.height = 'fit-content';
-      // dynaaminentausta.style.padding = '2px';
-      // dynaaminentausta.style.borderStyle = 'outset';
 
       // Luodaan 'dynaaminentausta' DIV-elementti ja määritellään sille attribuutti 'id' arvolla 'tausta + i' debugaussyistä.
       // Samalla muokataan 'dynaaminentausta' DIV-elementin tyyliä mm. width, margin ja padding.
@@ -510,7 +512,6 @@ function lisääListaan2() {
       //   }
       // })
       dynaaminentausta.appendTo(lista);
-      lista.show("slow");
 
       // lista.appendChild(dynaaminentausta);
 
@@ -519,7 +520,7 @@ function lisääListaan2() {
       tallennaMuistiin2();
       // Ajetaan tallennaMuistiin()-funktio, jotta uusi To Do -item pääsee localStorageen.
 
-      // window.location.reload();
+      window.location.reload();
     } else {
       window.alert("Selaimesi ei tue localStoragea.");
 
