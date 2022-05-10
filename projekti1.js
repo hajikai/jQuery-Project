@@ -156,8 +156,9 @@ function renderöi() {
   });
 
   dynaaminentausta.appendTo(lista);
+  lista.show();
   dynaaminentausta.hide();
-  dynaaminentausta.slideDown('slow');
+  dynaaminentausta.show('slow');
 
   
   
