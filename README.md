@@ -1,4 +1,4 @@
-# Projekti
+# Projekti 3
  Web-sovellusten kehittäminen Javascriptillä TO00BL10-3014 -kurssin ensimmäinen projekti, joka toimii To Do -listana DOM-metodeilla.
 
 To Do -lista toimii niin, että saat lisätä sinne haluamasi määrän 'itemeitä' eli otsikoita (tai otsikko + kommentti kombinaatioita), joita voit merkitä tehdyksksi 'Merkitse tehdyksi' -nappia painamalla. Tämä yliviivaa item:n otsikon, piilottaa kommentin (jos sitä on) ja muuttaa 'Merkitse tehdyksi' -napin 'Palauta'-napiksi, jolla saat 'item':n takaisin edelliseen tilaan. 
