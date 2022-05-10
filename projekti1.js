@@ -154,11 +154,13 @@ function renderöi() {
       tsekkaaMäärä2();
     }
   });
+
   dynaaminentausta.appendTo(lista);
-  lista.show("slow");
-  dynaaminentausta.slideDown("slow");
-  const poistonappi = $('#poistonappi');
-  poistonappi.show();
+  dynaaminentausta.hide();
+  dynaaminentausta.slideDown('slow');
+
+  
+  
   tsekkaaMäärä2();
 }
 
