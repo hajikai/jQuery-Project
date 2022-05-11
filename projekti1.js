@@ -104,7 +104,7 @@ function renderöi() {
   const kommenttikenttä = $("<p>" + loadComment + "</p>");
   kommenttikenttä.attr("class", "kommentti");
 
-  const tärkeäKenttä = $("<button>Merkitse tehdyksi.</button>");
+  const tärkeäKenttä = $("<button>Merkitse tehdyksi</button>");
   tärkeäKenttä.attr("class", "notdone");
   tärkeäKenttä.attr("button", "complete");
   tärkeäKenttä.attr("id", määrä);
@@ -156,6 +156,12 @@ function renderöi() {
   lista.show();
   dynaaminentausta.hide();
   dynaaminentausta.show("slow");
+
+  // debugausta varten:
+  const thisdone = tärkeäKenttä[0];
+  const nro =  thisdone.id;
+    console.log(nro);
+
 
   tsekkaaMäärä2();
 }
@@ -211,14 +217,14 @@ function lataaMuistista3() {
     const tärkeäKenttä = $("<button>");
 
     if (loadTitle == loadCompleted) {
-      tärkeäKenttä.text("Palauta.");
+      tärkeäKenttä.text("Palauta");
       otsikkokenttä.css("textDecoration", "line-through");
       tärkeäKenttä.attr("class", "done");
       tärkeäKenttä.attr("button", "complete");
       tärkeäKenttä.attr("id", i);
       kommenttikenttä.css("display", "none");
     } else if (loadTitle !== loadCompleted) {
-      tärkeäKenttä.text("Merkitse tehdyksi.");
+      tärkeäKenttä.text("Merkitse tehdyksi");
       otsikkokenttä.css("textDecoration", "");
       tärkeäKenttä.attr("class", "notdone");
       tärkeäKenttä.attr("button", "complete");
@@ -234,7 +240,7 @@ function lataaMuistista3() {
         tärkeäKenttä.removeClass("done").addClass("notdone");
         otsikkokenttä.css("textDecoration", "");
         kommenttikenttä.show("slow");
-        tärkeäKenttä.text("Merkitse tehdyksi.");
+        tärkeäKenttä.text("Merkitse tehdyksi");
         myStorage.removeItem("tehty" + i);
         var päivitettyTehdyt = myStorage.getItem("tehdyt");
         var parsedTehdyt = parseInt(päivitettyTehdyt);
@@ -246,7 +252,7 @@ function lataaMuistista3() {
         tärkeäKenttä.removeClass("notdone").addClass("done");
         otsikkokenttä.css("textDecoration", "line-through");
         kommenttikenttä.hide("slow");
-        tärkeäKenttä.text("Palauta.");
+        tärkeäKenttä.text("Palauta");
         myStorage.setItem("tehty" + i, loadTitle); // Tai otsikkokenttä.html() tms.
         var päivitettyTehdyt = myStorage.getItem("tehdyt");
         var parsedTehdyt = parseInt(päivitettyTehdyt);

@@ -20,11 +20,6 @@
     <p id="määrä">Lista on tyhjä.</p>
   </div>
   <h2 id="haluatko">Haluatko lisätä jotain listaan?</h2>
-  <!-- <form name="omaLomake1" action="#" onsubmit="createItem();" method="">
-    <span><strong>Otsikko:</strong></span><br><input type="text" name="otsikko" id="otsikko" required /><br />
-    <span><strong>Kommentti:</strong></span><br><textarea name="comment" id="comment"></textarea>
-    <br><input type="button" value="Lähetä" id='nappi' onclick="createItem();" />
-  </form> -->
   <form name="lomake" action='#' id="realForm">
   <div class="form-floating mb-3">
     <input type="text" name="otsikko" id="otsikko" class="form-control" placeholder="Otsikko" />
@@ -34,15 +29,8 @@
     <textarea class="form-control" placeholder="Leave a comment here" id="comment" style="height: 100px"></textarea>
     <label for="floatingTextarea2">Kommentti</label>
   </div>
-  <!-- <div class="form-floating">
-    <input type="kommentti" id='comment' class="form-control" id="floatingPassword" placeholder="Password">
-    <label for="floatingPassword">Kommentti</label>
-  </div> -->
   <br>
   <input class="btn btn-primary" id='nappi' type="submit" value="Lähetä" onclick="createItem();">
-  <!-- <button class="btn btn-primary" id="nappi" type="submit">Lähetä</button> -->
-
-  <!-- <input type="button" value="Lähetä" id='nappi' onclick="createItem();"> -->
   </form>
   <br>
   <div id="lista" class="container-sm">
@@ -50,10 +38,7 @@
     
   </div>
   <br>
-  <!-- <input class="btn btn-primary" type="button" value="Tyhjennä lista" id='poistonappi' onclick="tyhjennäLista3();">
-  <button class="btn btn-primary" type="button" id="poistonappi" onclick="tyhjennäLista3();">Tyhjennä lista.</button>
-   -->
-  <button id="poistonappi" onclick="tyhjennäLista3();">Tyhjennä lista.</button>
+  <button id="poistonappi" onclick="tyhjennäLista3();">Tyhjennä lista</button>
 </div>
 </body>
 <script src="projekti1.js"></script>
