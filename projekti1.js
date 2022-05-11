@@ -2,7 +2,6 @@
 
 myStorage = window.localStorage;
 
-
 // myStorage käyttää selaimen localStorage-muistia
 
 // Alla määrittelen muuttujan 'done', joka pitää lukua siitä kuinka moni To Do -listan itemi on suoritetussa tilassa. Saan arvon 'null', jos sitä ei ole olemassa, joten siinä tapauksessa
@@ -48,8 +47,6 @@ function createItem() {
 
   const item = { title: otsikko, comment: kommentti };
   console.log(item);
-
-  
 
   if (otsikko == "") {
     window.alert(
@@ -158,10 +155,8 @@ function renderöi() {
   dynaaminentausta.appendTo(lista);
   lista.show();
   dynaaminentausta.hide();
-  dynaaminentausta.show('slow');
+  dynaaminentausta.show("slow");
 
-  
-  
   tsekkaaMäärä2();
 }
 
@@ -282,15 +277,15 @@ function lataaMuistista3() {
   tsekkaaMäärä2();
 }
 
-// tyhjennäLista()-funktio tekee mitä nimi sanoo: tyhjentää listan kokonaisuudessaan käyttämällä while (child) -ehtoa, joka poistaa jokaisen 'lista'-elementin lapsen yksi kerrallaan.
+// tyhjennäLista()-funktio tekee mitä nimi sanoo: tyhjentää listan kokonaisuudessaan käyttämällä for-looppia, joka piilottaa ja poistaa jokaisen 'kentät'-elementin yksi kerrallaan.
 // Lopuksi tyhjennän localStoragen ja määrittelen 'tehdyt' arvoksi nollan.
+
 
 function tyhjennäLista3() {
   const lista = $("#lista");
   const kentät = $(".tausta");
   for (let i = 0; i < kentät.length; i++) {
-    lista.hide("slow");
-    kentät.remove();
+    kentät.hide("slow").delay(10).queue(function(){$(this).remove();});
   }
   myStorage.clear();
   myStorage.setItem("tehdyt", 0);
