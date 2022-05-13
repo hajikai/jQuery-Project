@@ -7,8 +7,9 @@ myStorage = window.localStorage;
 // Alla määrittelen muuttujan 'done', joka pitää lukua siitä kuinka moni To Do -listan itemi on suoritetussa tilassa. Saan arvon 'null', jos sitä ei ole olemassa, joten siinä tapauksessa
 // annan sille arvon 0 - muuten annan muistista saadun arvon. Arvo menee muistiin nimellä 'tehdyt'.
 // Sama juttu muuttujan 'määrä' kanssa.
-
+myStorage.setItem('tehdyt');
 var done = myStorage.getItem("tehdyt");
+
 if (done == "null") {
   myStorage.setItem("tehdyt", 0);
 }
@@ -16,7 +17,9 @@ if (done != "null") {
   myStorage.setItem("tehdyt", done);
 }
 
+myStorage.setItem('määrä');
 var määrä = myStorage.getItem("määrä");
+
 if (määrä == "null") {
   myStorage.setItem("määrä", 0);
 }
@@ -81,7 +84,7 @@ function createItem() {
 
       // Sitten renderöimään.
 
-      renderöi();
+    
     }
   }
 }
@@ -111,7 +114,7 @@ function renderöi() {
 
   const dynaaminentausta = $("<div>", {
     id: määrä,
-    class: "tausta",
+    class: "tausta"
   });
   // dynaaminentausta.css('border', '1px solid gray');
   // dynaaminentausta.css('margin', '5px');
@@ -153,9 +156,7 @@ function renderöi() {
   });
 
   dynaaminentausta.appendTo(lista);
-  lista.show();
-  dynaaminentausta.hide();
-  dynaaminentausta.show("slow");
+  
 
   // debugausta varten:
   const thisdone = tärkeäKenttä[0];
