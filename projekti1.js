@@ -83,8 +83,6 @@ function createItem() {
       // Lopuksi lisään avaimet (nimet ja arvot) localStorageen.
 
       // Sitten renderöimään.
-
-    
     }
   }
 }
